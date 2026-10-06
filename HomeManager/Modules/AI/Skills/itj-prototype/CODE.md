@@ -25,19 +25,24 @@ checked later — whether you're returning to it AFK or handing off to another s
 
 ### 2. Create the prototype until it compiles
 
-Create the prototype as a new subdirectory under the project's top-level, build-flag-gated
-`prototypes/` directory (or equivalent), named for the question being answered. The area is compiled
-only when explicitly opted in (e.g. `--features prototype` in cargo, a CMake option, a Make target)
-and is **not** built by default — the usual check command skips it. The prototype depends on the
-real project modules as path/workspace dependencies, and it answers one question: if a sibling
-prototype (another subdirectory in the same area) needs a type this one defines, it imports the type
-directly from this subdirectory.
+Create the prototype as `prototypes/<name-of-prototype>/` (or the project's equivalent area) at the
+project's top level, named for the question being answered. Each subdirectory is a self-contained
+package/library: the default check command **compiles every prototype**, but each is built as a
+separate library that is **not linked into the primary build target**. (Cargo's `--features
+prototype` is a good default here, since the usual check command already runs `--all-features`.)
+
+Each prototype is **independent**: it depends only on the real project modules (as
+path/workspace dependencies) and on the standard library. If a prototype wants to reuse something
+another prototype defines, that's a sign the two questions belong in one prototype. Ask the user
+whether to merge them into a single prototype (e.g. `prototypes/<baz>/{foo,bar}`). If the user isn't
+available, duplicate the code into the new prototype instead: prototypes are throwaway, so a copy
+is cheaper than a wrong dependency.
 
 Produce **candidate options** (the signature variants, struct shapes, module boundaries, usage
-sketches) that the question is choosing between, not a single answer, and run the project's check
-command (the prototype's opt-in variant, e.g. `cargo check --features prototype` or `make -C
-prototypes/<name> check`) in a tight loop until the code compiles cleanly, the relevant tests pass,
-and you can point at the specific type, function, or macro expansion that proves the answer.
+sketches) that the question is choosing between, not a single answer, and run the project's default
+check command (which compiles all prototypes) in a tight loop until the code compiles cleanly, the
+relevant tests pass, and you can point at the specific type, function, or macro expansion that
+proves the answer.
 
 **The compiler output is your state panel.** Read every error. The compile check is a **precondition
 for the next step**, not the design answer — it confirms the design is *coherent*, not that it's the
@@ -93,8 +98,9 @@ prototype subdirectory may be deleted. Git history keeps it recoverable.
 * **Don't generalize.** The prototype answers *one* question. No "what if we later want X." If a
   follow-up question arises, it's a new prototype (a new subdirectory in the same area).
 
-* **Don't skip the build gate.** If the prototype area is built by default, its errors block the
-  usual check command. The gate is what makes "throwaway but on main" work.
+* **Don't link a prototype into the primary target.** Prototypes compile as standalone libraries
+  so they exercise the real toolchain, but if one is linked into the main target, a throwaway
+  mistake ships as production.
 
 * **Don't let the prototype area grow past the active question set.** Subdirectories for closed
   questions are throwaway. Delete them when the question closes, or leave them only when their git
