@@ -13,10 +13,8 @@ The default check command (`cargo check --all-features`) compiles every prototyp
 exist behind the `prototype` feature, so they are inert under a plain default check and the
 prototypes' code never reaches a normal build.
 
-Each prototype compiles as a standalone library crate: the check compiles it, but nothing links it
-into the primary build target. The main crate lists the prototype crates as optional
-`[dependencies]` (gated by a `prototypes` feature), so the app links a prototype only when the
-feature is on.
+A prototype must not be used as a dependency of any other crate. The check compiles a prototype,
+but nothing links it into the primary build target.
 
 ## Independence
 

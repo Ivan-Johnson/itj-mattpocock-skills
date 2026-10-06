@@ -111,9 +111,9 @@ prototype subdirectory may be deleted. Git history keeps it recoverable.
 * **Don't generalize.** The prototype answers *one* question. No "what if we later want X." If a
   follow-up question arises, it's a new prototype (a new subdirectory in the same area).
 
-* **Don't link a prototype into the primary target.** Prototypes compile as standalone libraries
-  so they exercise the real toolchain, but if one is linked into the main target, a throwaway
-  mistake ships as production.
+* **Don't link into the primary target.** The project's `docs/prototypes.md` describes how the
+  build keeps prototypes out of the primary target. A throwaway mistake must not ship as
+  production.
 
 * **Don't let the prototype area grow past the active question set.** Subdirectories for closed
   questions are throwaway. Delete them when the question closes, or leave them only when their git
