@@ -23,7 +23,7 @@ around. The question is the contract: what counts as "answered," and who gets to
 prototype that answers the wrong question is pure waste, so make the question explicit so it can be
 checked later — whether you're returning to it AFK or handing off to another session.
 
-### 2. Create the prototype until it compiles
+### 2. Draft the prototype
 
 The prototype's location and build wiring come from `docs/prototypes.md` at the project's top
 level (a [template](prototype-doc-template-rust.md) for rust projects is included with this skill).
@@ -48,9 +48,9 @@ Run the project's default check command (which compiles all prototypes) in a tig
 code compiles cleanly and you can point at the specific type, function, or macro expansion that
 proves the answer.
 
-The compile check is a **precondition for the next step**, not the design answer — it confirms the
-design is *coherent*, not that it's the design the human wants. If the compiler says no, the
-prototype *is* the debug session: read every error, edit, re-check, repeat.
+The compile check is a **precondition for the next step** — it confirms the
+design is *coherent*, but it does not confirm that the human actually wants this
+design.
 
 ### 3. Show it to the human
 
