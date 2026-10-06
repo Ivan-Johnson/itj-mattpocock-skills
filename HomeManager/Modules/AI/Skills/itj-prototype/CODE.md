@@ -1,17 +1,15 @@
 # Code Prototype
 
-A minimal, real module that compiles with the project's toolchain. Use this when the question is about **type signatures, borrow-checker validity, trait bounds, module boundaries, or generated code shape** — the kind of thing that looks reasonable on paper but only reveals its constraints when the compiler runs.
-
-Because it uses the real toolchain, the artifact *is* the feedback loop: compile errors, test output, macro/AST expansions, and generated asm are the "state" you surface. The prototype evolves by editing code and re-running the check command until the question is answered.
+A minimal, real module that compiles with the project's toolchain. Use this when the question is about **type signatures, type-system validity, trait/constraint bounds, module boundaries, or generated code shape** — the kind of thing that looks reasonable on paper but only reveals its constraints when the toolchain runs.
 
 ## When this is the right shape
 
 * "Does this trait bound / generic signature actually work for the real types?"
-* "Can I express this state machine as a typestate without borrow-checker fights?"
-* "What does the macro expand to, and does the generated code compile?"
-* "Which of these three linked-list layouts (raw pointer, BSD queue.h, macro-generated) satisfies the aliasing rules?"
+* "Can I express this state machine in a form the type system enforces at compile time?"
+* "What does the macro or template expand to, and does the generated code compile?"
+* "Which of these three data-structure implementations satisfies the language's memory/aliasing rules?"
 * "Does this module boundary actually enforce the encapsulation I think it does?"
-* Anything where the question is **answered by the compiler**, not by a human clicking buttons.
+* Anything where the question is **answered by the compiler or type checker**, not by a human clicking buttons.
 
 If the question is "does this state model feel right to a non-developer" or "what should this UI look like," this is the wrong branch. Use [LOGIC.md](LOGIC.md) or [UI.md](UI.md).
 
