@@ -83,9 +83,8 @@ prototype subdirectory may be deleted. Git history keeps it recoverable.
 
 ## Anti-patterns
 
-* **Don't add tests before it compiles.** Tests lock in the answer; the compiler finds it. Add them
-  once the answer is in, to freeze the decision — which is when the prototype stops being a
-  prototype and becomes the implementation.
+* **No tests.** The compiler is the check; a prototype that wants tests has outgrown itself. Writing
+  them means you're writing the real implementation, which is past the prototype's scope.
 
 * **Don't modify the real modules while a prototype is active.** If the prototype needs a change in
   the real code to even compile, that's a signal the prototype is the wrong shape, or the question
