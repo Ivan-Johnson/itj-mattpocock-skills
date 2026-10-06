@@ -30,7 +30,7 @@ The project maintains a **feature-gated `prototype/` workspace member** (enabled
 * Contains one submodule per active wayfinding map (e.g. `ipc_plugin_map/`, `rpc_macro_map/`).
 * Is **not** built by default — `cargo check` on `main` skips it. Run `cargo check --features prototype` explicitly when working on prototypes.
 
-Create your prototype as a new module under `prototype/<map_name>/<variant>.rs` (or a sub-crate under `prototype/<map_name>/` if it needs its own `Cargo.toml`). Use the real dependencies, real types, real macros — no mocks, no stubs, no `#[cfg(test)]` gating. The prototype *is* real code; it just lives in the sandbox.
+Create your prototype as a new module under `prototype/<map_name>/<variant>.rs` (or a sub-crate under `prototype/<map_name>/` if it needs its own `Cargo.toml`). Use the real dependencies, real types, real macros — no mocks, no stubs, no `#[cfg(test)]` gating.
 
 ### 3. Iterate with the compiler
 
@@ -52,7 +52,7 @@ make -C prototype/linked_list_map check
 * The relevant tests pass (`cargo test --features prototype`), **AND**
 * You can point at the specific type / function / macro expansion that proves the answer.
 
-If the compiler says no, the prototype *is* the debug session. Edit, re-check, repeat. Don't add tests until the shape compiles; tests are for locking in the answer, not finding it.
+If the compiler says no, the prototype *is* the debug session. Edit, re-check, repeat.
 
 ### 4. Surface the answer in the code
 
@@ -76,7 +76,7 @@ Either way, the `prototype/<map>/` directory is **throwaway** — it disappears 
 
 ### 6. Capture the prototype as a primary source
 
-Per the [SKILL](SKILL.md), the prototype itself is a primary source. Since it lives in the `prototype/` crate on `main` (feature-gated), it's already captured. When the map finishes:
+Per the [SKILL](SKILL.md), the prototype itself is a primary source. Since it lives on `main` (feature-gated), section 5 *is* the capture:
 * If graduated → the real crate *is* the capture; delete `prototype/<map>/`.
 * If discarded → the ticket's resolution comment + the git history of `prototype/<map>/` (on `main`) are the capture. Optionally, tag the commit (`prototype/<map>/discarded`) before deleting.
 
@@ -84,7 +84,7 @@ No separate branch needed. The feature gate keeps it off default builds; the wor
 
 ## Anti-patterns
 
-* **Don't add tests before it compiles.** A prototype that needs tests to pass is no longer a prototype — it's an implementation. Tests lock in the answer; the compiler finds it.
+* **Don't add tests before it compiles.** Tests lock in the answer; the compiler finds it. Add them once the answer is in, to freeze the decision — which is when the prototype stops being a prototype and becomes the implementation.
 * **Don't mock the real dependencies.** Use the real `itj_tiny_deps::ipc::Connection`, the real `itj_rpc_macro::define_rpc`, the real `Controller`/`SttEngine` types. Mocks hide the exact constraints (lifetimes, trait bounds, generics) that the prototype exists to surface.
 * **Don't generalize.** The prototype answers *one* question. No "what if we later want X." If a follow-up question arises, it's a new prototype (possibly in the same map, reusing `prototype/common/` types).
 * **Don't blur the prototype and the real crate.** The prototype imports from the real crate; the real crate never imports from the prototype (except via `prototype/common/` types that have explicitly graduated). Directionality: `prototype → real`, never `real → prototype`.
