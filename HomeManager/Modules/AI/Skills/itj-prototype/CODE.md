@@ -73,7 +73,8 @@ struct shapes, module boundaries, usage sketches), then ask the question. Three 
 
 ### 4. Surface the answer and capture
 
-Once the decision is made, make the answer **visible in the source** so a future reader (or you, AFK) doesn't have to re-derive it:
+Once the decision is made, make the answer **visible in the source** so a future reader (or you,
+AFK) doesn't have to re-derive it:
 
 * Add an `ANSWER:` doc comment at the top of the module summarizing the decision.
 
