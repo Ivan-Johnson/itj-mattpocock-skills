@@ -25,11 +25,11 @@ checked later — whether you're returning to it AFK or handing off to another s
 
 ### 2. Create the prototype until it compiles
 
-Create the prototype as `prototypes/<name-of-prototype>/` (or the project's equivalent area) at the
-project's top level, named for the question being answered. Each subdirectory is a self-contained
-package/library: the default check command **compiles every prototype**, but each is built as a
-separate library that is **not linked into the primary build target**. (Cargo's `--features
-prototype` is a good default here, since the usual check command already runs `--all-features`.)
+The prototype's location and build wiring come from `docs/prototypes.md` at the project's top
+level (a [template](prototype-doc-template-rust.md) for rust projects is included with this skill).
+If the file is missing, stop and tell the user: the prototype area and its build wiring are a
+project convention, and the user must create `docs/prototypes.md` before code prototypes can
+proceed.
 
 Each prototype is **independent**: it depends only on the real project modules (as
 path/workspace dependencies) and on the standard library. If a prototype wants to reuse something
