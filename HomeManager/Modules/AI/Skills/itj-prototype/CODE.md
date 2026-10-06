@@ -48,10 +48,9 @@ Run the project's default check command (which compiles all prototypes) in a tig
 code compiles cleanly and you can point at the specific type, function, or macro expansion that
 proves the answer.
 
-**The compiler output is your state panel.** Read every error. The compile check is a **precondition
-for the next step**, not the design answer — it confirms the design is *coherent*, not that it's the
-design the human wants. If the compiler says no, the prototype *is* the debug session: edit,
-re-check, repeat.
+The compile check is a **precondition for the next step**, not the design answer — it confirms the
+design is *coherent*, not that it's the design the human wants. If the compiler says no, the
+prototype *is* the debug session: read every error, edit, re-check, repeat.
 
 ### 3. Show it to the human
 
@@ -78,8 +77,8 @@ Once the decision is made, make the answer **visible in the source** so a future
   captured as a compile-failure: its absence from the candidate list, plus the question log, is the
   record.
 
-This is the "surface the state" rule adapted for code: the *answer* is the state, and it lives in
-the code.
+This is the [surface the state](SKILL.md) rule adapted for code: the *answer* is the state, and it
+lives in the code.
 
 Per the [SKILL](SKILL.md), the prototype itself is a primary source. Since it lives on `main`
 (build-flag-gated), it's already captured in place — no throwaway branch. The answer is recorded in
