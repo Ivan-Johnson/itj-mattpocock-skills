@@ -23,18 +23,15 @@ Before writing code, write down the exact question at the top of the prototype m
 
 ### 2. Create the prototype in the shared prototype area
 
-The project maintains a **build-flag-gated prototype area** — a workspace member or top-level directory excluded from default builds and compiled only when explicitly opted in (e.g. `--features prototype` in cargo, a CMake option, a Make target). It:
+The project maintains a **build-flag-gated prototype area** at the top-level `prototypes/` directory (or equivalent), compiled only when explicitly opted in (e.g. `--features prototype` in cargo, a CMake option, a Make target). Create your prototype as a new subdirectory under it, named for the question being answered.
 
-* Depends on the real project modules as path/workspace dependencies.
-* Contains a `common/` module for types that graduate to become shared contracts across prototypes.
-* Contains one sandbox per active design question (one directory per question, e.g. `question-a/`, `question-b/`).
-* Is **not** built by default — the usual check command skips it. Run the prototype's check command explicitly when working on a prototype.
-
-Create your prototype as a new module or file in its sandbox (a sub-crate / separate build unit if it needs its own dependency manifest). Use the real dependencies, real types, real macros — no mocks, no stubs, no test-gating.
+* The prototype area is **not** built by default — the usual check command skips it. Run the prototype's check command explicitly when working on it.
+* The prototype depends on the real project modules as path/workspace dependencies.
+* A prototype answers one question. If a sibling prototype (another subdirectory in the same area) needs a type this one defines, import it directly from this subdirectory.
 
 ### 3. Iterate with the compiler
 
-Run the project's check command in a tight loop (the prototype's opt-in variant, e.g. `cargo check --features prototype` or `make -C prototype/<sandbox> check`).
+Run the project's check command in a tight loop (the prototype's opt-in variant, e.g. `cargo check --features prototype` or `make -C prototypes/<name> check`).
 
 **The compiler output is your state panel.** Read every error. The question is answered when:
 * The code compiles cleanly (the check passes), **AND**
@@ -47,38 +44,28 @@ If the compiler says no, the prototype *is* the debug session. Edit, re-check, r
 
 Once it compiles, make the answer **visible in the source** so a future reader (or you, AFK) doesn't have to re-derive it:
 
-* Add a `ANSWER:` doc comment at the top of the module summarizing the decision.
+* Add an `ANSWER:` doc comment at the top of the module summarizing the decision.
 * If the answer is a type signature, put it in a named, grep-able type or constant.
 * If the answer is a macro expansion, capture it (e.g. an expansion snapshot), or prove the negative case with a compile-failure test.
 
 This is the "surface the state" rule adapted for code: the *answer* is the state, and it lives in the code.
 
-### 5. Graduate or discard
+### 5. Capture the prototype as a primary source
 
-**Graduate (the happy path):** The validated types / functions / macros move out of the sandbox and into:
-* `common/` — if they're shared contracts for other prototypes in the same sandbox.
-* The real module — if they're the final production shape. This is the normal path: the prototype *becomes* the implementation.
+Per the [SKILL](SKILL.md), the prototype itself is a primary source. Since it lives on `main` (build-flag-gated), it's already captured in place. When the design question closes:
+* If the approach worked → the answer is recorded in the commit that records the decision (and in the tracker, if there is one).
+* If the approach failed → the answer ("this doesn't work because...") is recorded the same way, and the prototype subdirectory may be deleted.
 
-**Discard (the learning path):** The prototype proved the approach doesn't work. Delete the module. The answer ("this doesn't work because...") is captured in the commit message that deletes it, or in whatever tracker the design question lives in.
-
-Either way, the sandbox directory is **throwaway** — it disappears when the design question closes. Only `common/` and the real modules persist.
-
-### 6. Capture the prototype as a primary source
-
-Per the [SKILL](SKILL.md), the prototype itself is a primary source. Since it lives on `main` (build-flag-gated), section 5 *is* the capture:
-* If graduated → the real module *is* the capture; delete the sandbox.
-* If discarded → the commit message + the git history of the sandbox (on `main`) are the capture. Optionally, tag the commit (`<sandbox>/discarded`) before deleting.
-
-No separate branch needed. The build gate keeps it off default builds; the workspace keeps it composable; git history keeps it recoverable.
+No separate branch needed. The build gate keeps it off default builds; git history keeps it recoverable.
 
 ## Anti-patterns
 
 * **Don't add tests before it compiles.** Tests lock in the answer; the compiler finds it. Add them once the answer is in, to freeze the decision — which is when the prototype stops being a prototype and becomes the implementation.
+* **Don't modify the real modules while a prototype is active.** If the prototype needs a change in the real code to even compile, that's a signal the prototype is the wrong shape, or the question is bigger than one prototype. Stop, re-scope, and only edit real modules once the prototype's question is answered and the decision is being made for real.
 * **Don't mock the real dependencies.** Use the real project types and interfaces. Mocks hide the exact constraints (lifetimes, trait bounds, generics) that the prototype exists to surface.
-* **Don't generalize.** The prototype answers *one* question. No "what if we later want X." If a follow-up question arises, it's a new prototype (possibly in the same sandbox, reusing `common/` types).
-* **Don't blur the prototype and the real module.** The prototype imports from the real module; the real module never imports from the prototype (except via `common/` types that have explicitly graduated). Directionality: `prototype → real`, never `real → prototype`.
-* **Don't skip the build gate.** If the prototype area is built by default, its errors block CI and the usual check command. The gate is what makes "throwaway but on main" work.
-* **Don't persist prototype-only types in `common/` forever.** `common/` is for *shared contracts* — types that two or more prototypes in the *same sandbox* depend on. If only one prototype uses it, it stays in that prototype's module. If the sandbox closes and no other sandbox needs it, `common/` gets cleaned too.
+* **Don't generalize.** The prototype answers *one* question. No "what if we later want X." If a follow-up question arises, it's a new prototype (a new subdirectory in the same area).
+* **Don't skip the build gate.** If the prototype area is built by default, its errors block the usual check command. The gate is what makes "throwaway but on main" work.
+* **Don't let the prototype area grow past the active question set.** Subdirectories for closed questions are throwaway. Delete them when the question closes, or leave them only when their git history is the capture (see section 5).
 
 ---
 
