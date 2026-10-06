@@ -19,8 +19,7 @@ but nothing links it into the primary build target.
 ## Independence
 
 A prototype depends only on the project's real crates (as path dependencies) and the standard
-library. One prototype must not depend on another: if it needs a type from a sibling prototype,
-ask the user to merge the two prototypes, or, when the user can't be reached, copy the code.
+library. A prototype must not depend on another prototype crate.
 
 ## Naming
 

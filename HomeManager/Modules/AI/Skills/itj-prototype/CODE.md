@@ -38,12 +38,12 @@ If the file is missing, stop and tell the user: the prototype area and its build
 project convention, and the user must create `docs/prototypes.md` before code prototypes can
 proceed.
 
-Each prototype is **independent**: it depends only on the real project modules (as
-path/workspace dependencies) and on the standard library. If a prototype wants to reuse something
-another prototype defines, that's a sign the two questions belong in one prototype. Ask the user
-whether to merge them into a single prototype (e.g. `prototypes/<baz>/{foo,bar}`). If the user isn't
-available, duplicate the code into the new prototype instead: prototypes are throwaway, so a copy
-is cheaper than a wrong dependency.
+A prototype is **independent**: it depends only on the real project modules and the standard
+library, never on another prototype — see `docs/prototypes.md` for how the project enforces this.
+
+If a prototype wants to reuse what another prototype defines, that's a sign the two questions
+belong in one prototype. Ask the user to **merge** them; if the user isn't available, **copy** the
+code instead. A copy is cheaper than a wrong dependency in throwaway code.
 
 Produce **candidate options** (the signature variants, struct shapes, module boundaries, usage
 sketches) that the question is choosing between, not a single answer. **Each candidate must compile
