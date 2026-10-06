@@ -1,17 +1,24 @@
 # Code Prototype
 
-A minimal, real module that compiles with the project's toolchain. Use this when the question is about **type signatures, type-system validity, trait/constraint bounds, module boundaries, or generated code shape** — the kind of thing that looks reasonable on paper but only reveals its constraints when the toolchain runs.
+A minimal, real module that compiles with the project's toolchain. Use this when the question is
+about **type signatures, type-system validity, trait/constraint bounds, module boundaries, or
+generated code shape** — the kind of thing that looks reasonable on paper but only reveals its
+constraints when the toolchain runs.
 
 ## When this is the right shape
 
 * "Does this trait bound / generic signature actually work for the real types?"
-* "Can I express this state machine in a form the type system enforces at compile time?"
-* "What does the macro or template expand to, and does the generated code compile?"
-* "Which of these three data-structure implementations satisfies the language's memory/aliasing rules?"
-* "Does this module boundary actually enforce the encapsulation I think it does?"
-* Anything where the question is **answered by the compiler or type checker**, not by a human clicking buttons.
 
-If the question is "does this state model feel right to a non-developer" or "what should this UI look like," this is the wrong branch. Use [LOGIC.md](LOGIC.md) or [UI.md](UI.md).
+* "Can I express this state machine in a form the type system enforces at compile time?"
+
+* "Which of these three data-structure implementations satisfies the language's memory/aliasing rules?"
+
+* "Does this module boundary actually enforce the encapsulation I think it does?"
+
+* Anything where the question is answered by writing code
+
+If the question is "does this state model feel right to a non-developer" or "what should this UI
+look like," this is the wrong branch. Use [LOGIC.md](LOGIC.md) or [UI.md](UI.md).
 
 ## Process
 
@@ -48,9 +55,8 @@ Run the project's default check command (which compiles all prototypes) in a tig
 code compiles cleanly and you can point at the specific type, function, or macro expansion that
 proves the answer.
 
-The compile check is a **precondition for the next step** — it confirms the
-design is *coherent*, but it does not confirm that the human actually wants this
-design.
+The compile check is a **precondition for the next step** — it confirms the design is *coherent*,
+but it does not confirm that the human actually wants this design.
 
 ### 3. Show it to the human
 
