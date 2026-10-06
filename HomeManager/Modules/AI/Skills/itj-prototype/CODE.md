@@ -39,9 +39,13 @@ available, duplicate the code into the new prototype instead: prototypes are thr
 is cheaper than a wrong dependency.
 
 Produce **candidate options** (the signature variants, struct shapes, module boundaries, usage
-sketches) that the question is choosing between, not a single answer, and run the project's default
-check command (which compiles all prototypes) in a tight loop until the code compiles cleanly, the
-relevant tests pass, and you can point at the specific type, function, or macro expansion that
+sketches) that the question is choosing between, not a single answer. **Each candidate must compile
+on its own.** A candidate that doesn't is a *rejected option*, not a finding: delete it or comment it
+out and note the reason next to the question from step 1. The prototype as a whole stays green; a
+failed build is a record, not a resident.
+
+Run the project's default check command (which compiles all prototypes) in a tight loop until the
+code compiles cleanly and you can point at the specific type, function, or macro expansion that
 proves the answer.
 
 **The compiler output is your state panel.** Read every error. The compile check is a **precondition
@@ -70,8 +74,9 @@ Once the decision is made, make the answer **visible in the source** so a future
 
 * If the answer is a type signature, put it in a named, grep-able type or constant.
 
-* If the answer is a macro expansion, capture it (e.g. an expansion snapshot), or prove the negative
-  case with a compile-failure test.
+* If the answer is a macro expansion, capture it as an expansion snapshot. A rejected option is not
+  captured as a compile-failure: its absence from the candidate list, plus the question log, is the
+  record.
 
 This is the "surface the state" rule adapted for code: the *answer* is the state, and it lives in
 the code.
@@ -85,6 +90,9 @@ prototype subdirectory may be deleted. Git history keeps it recoverable.
 
 * **No tests.** The compiler is the check; a prototype that wants tests has outgrown itself. Writing
   them means you're writing the real implementation, which is past the prototype's scope.
+
+* **No non-compiling candidate in the tree.** The prototype is a green build at rest; a dead option
+  is a dead file, not a failing test.
 
 * **Don't modify the real modules while a prototype is active.** If the prototype needs a change in
   the real code to even compile, that's a signal the prototype is the wrong shape, or the question
