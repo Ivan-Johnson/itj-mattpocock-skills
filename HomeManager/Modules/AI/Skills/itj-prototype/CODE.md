@@ -28,24 +28,16 @@ checked later — whether you're returning to it AFK or handing off to another s
 Create the prototype as a new subdirectory under the project's top-level, build-flag-gated
 `prototypes/` directory (or equivalent), named for the question being answered. The area is compiled
 only when explicitly opted in (e.g. `--features prototype` in cargo, a CMake option, a Make target)
-and is **not** built by default — the usual check command skips it.
+and is **not** built by default — the usual check command skips it. The prototype depends on the
+real project modules as path/workspace dependencies, and it answers one question: if a sibling
+prototype (another subdirectory in the same area) needs a type this one defines, it imports the type
+directly from this subdirectory.
 
-* The prototype depends on the real project modules as path/workspace dependencies.
-
-* A prototype answers one question. If a sibling prototype (another subdirectory in the same area)
-  needs a type this one defines, the sibling imports it directly from this subdirectory.
-
-* Produce **candidate options** (the signature variants, struct shapes, module boundaries, usage
-  sketches) that the question is choosing between, not a single answer.
-
-Run the project's check command (the prototype's opt-in variant, e.g. `cargo check --features
-prototype` or `make -C prototypes/<name> check`) in a tight loop until:
-
-* The code compiles cleanly (the check passes), **AND**
-
-* The relevant tests pass (the project's test command, prototype opt-in), **AND**
-
-* You can point at the specific type / function / macro expansion that proves the answer.
+Produce **candidate options** (the signature variants, struct shapes, module boundaries, usage
+sketches) that the question is choosing between, not a single answer, and run the project's check
+command (the prototype's opt-in variant, e.g. `cargo check --features prototype` or `make -C
+prototypes/<name> check`) in a tight loop until the code compiles cleanly, the relevant tests pass,
+and you can point at the specific type, function, or macro expansion that proves the answer.
 
 **The compiler output is your state panel.** Read every error. The compile check is a **precondition
 for the next step**, not the design answer — it confirms the design is *coherent*, not that it's the
