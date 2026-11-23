@@ -1,6 +1,6 @@
 diff -ruN upstream/skills/engineering/implement-spec/SKILL.md patched/skills/engineering/implement-spec/SKILL.md
 --- upstream/skills/engineering/implement-spec/SKILL.md	2026-11-22 19:50:19.706038836 -0500
-+++ patched/skills/engineering/implement-spec/SKILL.md	2026-11-22 19:50:45.751038653 -0500
++++ patched/skills/engineering/implement-spec/SKILL.md	2026-11-22 19:50:54.473323656 -0500
 @@ -24,18 +24,18 @@
  
  2. (optional) Use an **exploration subagent** to conduct any exploration required by the tickets - relevant codebase files or external documentation. Ensure the exploration subagent can save files - it should save its markdown notes in a directory outside the repo, accessible by all future subagents. This lets **implementer subagents** focus on implementation rather than exploration.
@@ -10,8 +10,9 @@ diff -ruN upstream/skills/engineering/implement-spec/SKILL.md patched/skills/eng
  
  4. Use a fresh **implementer subagent** for each ticket, each in its own worktree on its own branch. Each implementer subagent:
     - confirms its worktree is based on the integration branch before starting, and resets onto it if not;
-    - calls the Skill tool with `tdd` to build the ticket;
+-   - calls the Skill tool with `tdd` to build the ticket;
 -   - merges the integration branch tip into its own branch before reporting done
++   - calls the Skill tool with `tdd` to build the ticket. The seams in the spec's Testing Decisions count as confirmed for the tdd skill; report back any seam the spec doesn't cover;
 +   - before reporting done, rebases onto the integration branch tip and squashes its work into one commit whose message ends `Closes #<n>`.
  
 -5. Once an **implementer subagent** completes, merge its work to the integration branch with a **merger subagent**.
