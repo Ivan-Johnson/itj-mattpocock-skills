@@ -2,8 +2,9 @@
 name: itj-good-prose
 description: >-
   Rules for any prose you write: skills, AGENTS.md / CLAUDE.md, READMEs and
-  docs, code and doc comments, ADRs, commit messages, PR bodies. Use when
-  writing or editing any of them.
+  docs, code and doc comments, ADRs, commit messages, PR bodies, and messages
+  (Slack, email, ticket or CR comments). Use when writing or editing any of
+  them.
 ---
 # Good prose
 
@@ -92,7 +93,8 @@ procedure or rationale goes in a separate doc that links to it.
 
 ## Forms
 
-* Comment, README, ADR, commit message, PR body: `FORMS.md`.
+* Comment, README, ADR, commit message, PR body, message (Slack, email,
+  ticket or CR comment): `FORMS.md`.
 * Skill, `AGENTS.md`, `CLAUDE.md`, or any doc an agent reads: `AGENT-DOCS.md`.
 
 ## Iterate
