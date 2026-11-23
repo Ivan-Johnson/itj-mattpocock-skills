@@ -32,8 +32,6 @@
                                 system:
                                 let
                                         pkgs = nixpkgs.legacyPackages.${system};
-                                in
-                                {
                                         default = pkgs.applyPatches {
                                                 name = "itj-mattpocock-skills";
                                                 src = mattpocock_skills;
@@ -50,6 +48,11 @@
                                                         cp -r --no-preserve=mode ${./overlay}/. .
                                                 '';
                                         };
+                                in
+                                {
+                                        default = default;
+                                        personal = default;
+                                        work = default;
                                 }
                         );
                 };
