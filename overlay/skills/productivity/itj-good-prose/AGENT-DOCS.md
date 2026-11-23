@@ -53,3 +53,11 @@ sequence, so an all-reference document still carries an exhaustiveness bar.
 
 The same leading word in your prompts, your docs, and your codebase links that
 shared language to the material, so the agent reaches it more reliably.
+
+## Repeated output
+
+A skill that reports the same kind of information every run (a task
+recommendation, a status summary, a review verdict) gives the exact output
+template in the skill, so every run reads the same. The template ends in one
+question the user can answer by voice: "yes" to accept the recommendation, or
+"one", "two" or "three" to pick an option.
