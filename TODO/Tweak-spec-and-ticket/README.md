@@ -9,10 +9,11 @@ a patch"). Everything here is tentative and subject to change.
 
 ## Notes
 
-* Trigger: tickets written by `/to-spec` and `/to-tickets` that had to be
-  abandoned and rewritten. Each instance is a file in
-  [Evidence/](Evidence/); so far only
-  [docket v0.1, ticket #20](Evidence/docket-v0.1-ticket-20.md).
+* Trigger: specs and tickets written by `/to-spec` and `/to-tickets` that had
+  to be abandoned and rewritten, or that left conflicts for implementers to
+  find. Each instance is a file in [Evidence/](Evidence/):
+  [docket v0.1, ticket #20](Evidence/docket-v0.1-ticket-20.md) and
+  [docket native code review](Evidence/docket-native-code-review.md).
 
 * The Trailblazer map's [docket v0.1 evidence](../Trailblazer/Evidence/docket-v0.1.md)
   covers the same session. Whether wayfinder fits this kind of effort at all is
@@ -50,6 +51,13 @@ a patch"). Everything here is tentative and subject to change.
   decisions leave open under "Open questions", with no default, and keep
   Implementation Decisions for what was decided. Open: whether `/to-spec`
   should instead be allowed to ask when the source has open questions.
+
+* `/to-spec`, steps 1 and 3 (exploring the repo; writing the spec): in step 1,
+  check each Implementation Decision that names a mechanism against the code;
+  in step 3, list conflicts between the source decisions and the spec's
+  sections, and resolve them with the user or record them under Further Notes.
+  Evidence: [docket native code review](Evidence/docket-native-code-review.md),
+  where implementers found five such conflicts mid-run.
 
 * `/to-tickets`, steps 3 and 4: a ticket should say where its tests go (the
   seam), and should not prescribe an implementation for it. #19 required a
