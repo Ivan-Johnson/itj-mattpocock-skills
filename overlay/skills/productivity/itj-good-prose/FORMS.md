@@ -22,6 +22,8 @@ want before writing.
   code gets none; what counts as simple depends on context (a linker script
   needs more than plain C).
 * **The *footgun*:** what breaks if someone makes the obvious-looking change.
+* **No-op:** a comment that restates what a flag or name already says adds
+  nothing; add one only for what the name does not carry.
 * **Shape:** typically under ~30 words and ~two lines. Complete sentences once
   prose spans multiple lines; a one-line comment can be a fragment.
 
