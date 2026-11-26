@@ -83,10 +83,11 @@ procedure or rationale goes in a separate doc that links to it.
   ends on a criterion the reader can check, and the strongest are exhaustive
   too ("every modified model accounted for", not "produce a change list").
   A vague bound invites *premature completion*; sharpen it first.
-* **Leading words.** A compact, well-known word (*lesson*, *tight*, *red*,
-  *tracer bullet*) repeated as a token anchors a region of behaviour. A triad
-  spelled out at three sites collapses into one such word. Reach for an
-  existing word before coining one.
+* **Leading words.** A compact, well-known word or phrase (*lesson*, *tight*,
+  *red*, *tracer bullet*, *parse, don't validate*) repeated as a token anchors
+  a region of behaviour; the reader's community jargon carries a whole
+  argument in a few words. A triad spelled out at three sites collapses into
+  one such word. Reach for an existing word before coining one.
 * **Positive.** State the behaviour you want; a prohibition drags the
   forbidden thing into view. Keep a ban only as a hard guardrail, paired with
   the positive target.
