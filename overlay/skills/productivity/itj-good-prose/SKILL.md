@@ -66,7 +66,9 @@ procedure or rationale goes in a separate doc that links to it.
 
   Inline what every branch needs (a *branch* is a distinct case the document
   handles); disclose what only some branches reach. Reference left in-file
-  buries the steps.
+  buries the steps. A summary of material that lives elsewhere points to it
+  when a reader may want more than the summary and cannot find it cheaply: a
+  link while it exists, a permalink to its last commit once deleted.
 * **Pointers.** The wording decides when the target is reached. Say what the
   material is, then one trigger per branch (synonyms are one branch written
   twice), leading word first. Cut identity the body already carries. A
